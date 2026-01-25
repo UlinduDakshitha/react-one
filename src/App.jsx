@@ -1,12 +1,14 @@
 import React from 'react'
 import './App.css'
+import { Home } from '@mui/icons-material'
+import HomePage from './pages/HomePage'
 
 function App() {
  
 
   return (
     <>
-       
+       <HomePage />
     </>
   )
 }
