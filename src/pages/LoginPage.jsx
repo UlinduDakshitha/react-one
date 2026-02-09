@@ -27,7 +27,7 @@ function LoginPage() {
       console.log("Login successful:", response);
 
       // Navigate to student table page
-      navigate("/studentsTable");
+      navigate("/studentsTablePage");
     } catch (err) {
       setError(err.message || "Login failed. Please check your credentials.");
     } finally {
