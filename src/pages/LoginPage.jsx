@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { TextField, Box, Typography, Container } from "@mui/material";
 import AppButton from "../components/button";
+import backgroundImage from "../assets/How to learn python for artificial intelligence_.jpg";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -12,61 +13,75 @@ function LoginPage() {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          minHeight: "100vh",
-          gap: 3,
-        }}
-      >
-        <Typography variant="h4" component="h1" gutterBottom>
-          Login
-        </Typography>
-
+    <div
+      style={{
+        backgroundImage: `url("${backgroundImage}")`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+      }}
+    >
+      <Container maxWidth="sm">
         <Box
-          component="form"
           sx={{
-            width: "100%",
             display: "flex",
             flexDirection: "column",
-            gap: 2,
-          }}
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleLogin();
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: "100vh",
+            gap: 3,
           }}
         >
-          <TextField
-            label="Username"
-            variant="outlined"
-            fullWidth
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+          <Typography variant="h4" component="h1" gutterBottom sx={{ color: "white" }}>
+            Login
+          </Typography>
 
-          <TextField
-            label="Password"
-            variant="outlined"
-            type="password"
-            fullWidth
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <Box
+            component="form"
+            sx={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+              backgroundColor: "rgba(255, 255, 255, 0.9)",
+              padding: 4,
+              borderRadius: 2,
+              boxShadow: 3,
+            }}
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleLogin();
+            }}
+          >
+            <TextField
+              label="Username"
+              variant="outlined"
+              fullWidth
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
 
-          <AppButton
-            label="Login"
-            onClick={handleLogin}
-            sx={{ mt: 2, py: 1.5 }}
-          />
+            <TextField
+              label="Password"
+              variant="outlined"
+              type="password"
+              fullWidth
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+
+            <AppButton
+              label="Login"
+              onClick={handleLogin}
+              sx={{ mt: 2, py: 1.5 }}
+            />
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+    </div>
   );
 }
 
