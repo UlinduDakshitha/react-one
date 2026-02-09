@@ -29,7 +29,7 @@ function LoginPage() {
       // ✅ token already saved in localStorage
       navigate("/studentsTablePage");
 
-    } catch {
+    } catch (err) {
       setError("Invalid username or password");
     } finally {
       setLoading(false);

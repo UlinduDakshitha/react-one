@@ -30,7 +30,7 @@ function RegisterPage() {
         navigate("/login");
       }, 1500);
 
-    } catch {
+    } catch (err) {
       setError("Registration failed. Username may already exist.");
     }
   };

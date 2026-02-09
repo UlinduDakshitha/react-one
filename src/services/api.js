@@ -26,10 +26,16 @@ api.interceptors.request.use(
 // ================= AUTH =================
 
 // Register
-export const registerUser = async (userData) => {
-  const response = await api.post("/auth/register", userData);
-  return response.data;
+ export const registerUser = async (userData) => {
+  try {
+    const response = await api.post("/auth/register", userData);
+    return response.data;
+  } catch (error) {
+    // backend sends plain text
+    throw new Error(error.response?.data || "Registration failed");
+  }
 };
+
 
 // Login (BACKEND RETURNS STRING TOKEN)
 export const loginUser = async (credentials) => {
@@ -50,6 +56,19 @@ export const logoutUser = () => {
 // Check login
 export const isAuthenticated = () => {
   return localStorage.getItem("authToken") !== null;
+};
+
+// Get current user (decode token or return user data)
+export const getCurrentUser = () => {
+  const token = localStorage.getItem("authToken");
+  if (!token) return null;
+
+  // For demo purposes, return a mock user
+  // In production, you should decode the JWT token to get user data
+  return {
+    username: "User",
+    role: "student"
+  };
 };
 
 // ================= STUDENT API =================
