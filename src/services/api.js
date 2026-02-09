@@ -31,16 +31,21 @@ api.interceptors.request.use(
     const response = await api.post("/auth/register", userData);
     return response.data;
   } catch (error) {
-    // backend sends plain text
-    
-    // 🔥 backend sends plain text
-    throw new Error(
-      typeof error.response?.data === "string"
-        ? error.response.data
-        : "Registration failed"
-    );
+    let message = "Registration failed";
+
+    if (error.response) {
+      if (typeof error.response.data === "string") {
+        message = error.response.data; // ✅ plain text
+      } else if (error.response.data?.message) {
+        message = error.response.data.message;
+      }
+    }
+
+    throw new Error(message);
   }
 };
+
+
 
 
 // Login (BACKEND RETURNS STRING TOKEN)
