@@ -44,10 +44,10 @@ function LoginPage() {
               display: "flex",
               flexDirection: "column",
               gap: 2,
-              backgroundColor: "rgba(255, 255, 255, 0.9)",
+              backgroundColor: "rgba(255, 255, 255, -0.8)",
               padding: 4,
               borderRadius: 2,
-              boxShadow: 3,
+              opacity: 1,
             }}
             onSubmit={(e) => {
               e.preventDefault();
