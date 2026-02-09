@@ -32,7 +32,13 @@ api.interceptors.request.use(
     return response.data;
   } catch (error) {
     // backend sends plain text
-    throw new Error(error.response?.data || "Registration failed");
+    
+    // 🔥 backend sends plain text
+    throw new Error(
+      typeof error.response?.data === "string"
+        ? error.response.data
+        : "Registration failed"
+    );
   }
 };
 
