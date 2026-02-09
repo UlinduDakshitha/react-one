@@ -31,7 +31,7 @@ function RegisterPage() {
       }, 1500);
 
     } catch (err) {
-      setError("Registration failed. Username may already exist.");
+      setError( err.message || "Registration failed");
     }
   };
 

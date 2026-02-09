@@ -30,7 +30,7 @@ function LoginPage() {
       navigate("/studentsTablePage");
 
     } catch (err) {
-      setError("Invalid username or password");
+      setError( err.message || "Login failed. Check your credentials.");
     } finally {
       setLoading(false);
     }
