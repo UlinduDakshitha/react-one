@@ -1,15 +1,38 @@
 import React, { useState } from "react";
-import { TextField, Box, Typography, Container } from "@mui/material";
+import { TextField, Box, Typography, Container, Alert } from "@mui/material";
 import AppButton from "../components/button";
 import backgroundImage from "../assets/How to learn python for artificial intelligence_.jpg";
+import { useNavigate } from "react-router-dom";
+import { loginUser } from "../services/api";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    console.log("Login clicked with:", { username, password });
-    // Add your login logic here
+  const handleLogin = async () => {
+    setError("");
+    setLoading(true);
+
+    if (!username || !password) {
+      setError("Username and password are required");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await loginUser({ username, password });
+      console.log("Login successful:", response);
+
+      // Navigate to student table page
+      navigate("/students");
+    } catch (err) {
+      setError(err.message || "Login failed. Please check your credentials.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -54,6 +77,8 @@ function LoginPage() {
               handleLogin();
             }}
           >
+            {error && <Alert severity="error">{error}</Alert>}
+
             <TextField
               label="Username"
               variant="outlined"
@@ -61,6 +86,7 @@ function LoginPage() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
+              disabled={loading}
             />
 
             <TextField
@@ -71,13 +97,26 @@ function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              disabled={loading}
             />
 
             <AppButton
-              label="Login"
+              label={loading ? "Logging in..." : "Login"}
               onClick={handleLogin}
               sx={{ mt: 2, py: 1.5 }}
             />
+
+            <Box sx={{ textAlign: "center", mt: 1 }}>
+              <Typography variant="body2">
+                Don't have an account?{" "}
+                <span
+                  onClick={() => navigate("/register")}
+                  style={{ color: "#1976d2", cursor: "pointer" }}
+                >
+                  Register here
+                </span>
+              </Typography>
+            </Box>
           </Box>
         </Box>
       </Container>
