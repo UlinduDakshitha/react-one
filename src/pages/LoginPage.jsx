@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+ import React, { useState } from "react";
 import { TextField, Box, Typography, Container, Alert } from "@mui/material";
 import AppButton from "../components/button";
 import backgroundImage from "../assets/How to learn python for artificial intelligence_.jpg";
@@ -14,22 +14,23 @@ function LoginPage() {
 
   const handleLogin = async () => {
     setError("");
-    setLoading(true);
 
     if (!username || !password) {
       setError("Username and password are required");
-      setLoading(false);
       return;
     }
 
     try {
-      const response = await loginUser({ username, password });
-      console.log("Login successful:", response);
+      setLoading(true);
 
-      // Navigate to student table page
+      // 🔑 backend returns STRING token
+      await loginUser({ username, password });
+
+      // ✅ token already saved in localStorage
       navigate("/studentsTablePage");
-    } catch (err) {
-      setError(err.message || "Login failed. Please check your credentials.");
+
+    } catch {
+      setError("Invalid username or password");
     } finally {
       setLoading(false);
     }
@@ -56,7 +57,7 @@ function LoginPage() {
             gap: 3,
           }}
         >
-          <Typography variant="h4" component="h1" gutterBottom sx={{ color: "white" }}>
+          <Typography variant="h4" sx={{ color: "white" }}>
             Login
           </Typography>
 
@@ -67,10 +68,9 @@ function LoginPage() {
               display: "flex",
               flexDirection: "column",
               gap: 2,
-              backgroundColor: "rgba(255, 255, 255, -0.8)",
+              backgroundColor: "rgba(255,255,255,0.9)",
               padding: 4,
               borderRadius: 2,
-              opacity: 1,
             }}
             onSubmit={(e) => {
               e.preventDefault();
@@ -81,42 +81,35 @@ function LoginPage() {
 
             <TextField
               label="Username"
-              variant="outlined"
-              fullWidth
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              required
               disabled={loading}
+              required
             />
 
             <TextField
               label="Password"
-              variant="outlined"
               type="password"
-              fullWidth
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
               disabled={loading}
+              required
             />
 
             <AppButton
               label={loading ? "Logging in..." : "Login"}
               onClick={handleLogin}
-              sx={{ mt: 2, py: 1.5 }}
             />
 
-            <Box sx={{ textAlign: "center", mt: 1 }}>
-              <Typography variant="body2">
-                Don't have an account?{" "}
-                <span
-                  onClick={() => navigate("/register")}
-                  style={{ color: "#1976d2", cursor: "pointer" }}
-                >
-                  Register here
-                </span>
-              </Typography>
-            </Box>
+            <Typography align="center" variant="body2">
+              Don’t have an account?{" "}
+              <span
+                style={{ color: "#1976d2", cursor: "pointer" }}
+                onClick={() => navigate("/register")}
+              >
+                Register here
+              </span>
+            </Typography>
           </Box>
         </Box>
       </Container>
